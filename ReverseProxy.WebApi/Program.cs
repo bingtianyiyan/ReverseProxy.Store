@@ -22,16 +22,16 @@ builder.Services.AddSingleton<IValidator<ProxyRoute>, ProxyRouteValidator>();
 
 
 //mysql
-//builder.Services.AddDbContext<EFCoreDbContext>(options =>
-//        options.UseMySql(
-//            Configuration.GetConnectionString("Default"),
-//            ServerVersion.AutoDetect(Configuration.GetConnectionString("Default")),
-//            b => b.MigrationsAssembly("ReverseProxy.WebApi")));
-
 builder.Services.AddDbContext<EFCoreDbContext>(options =>
-        options.UseNpgsql(
+        options.UseMySql(
             builder.Configuration.GetConnectionString("Default"),
+            ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Default")),
             b => b.MigrationsAssembly("ReverseProxy.WebApi")));
+
+//builder.Services.AddDbContext<EFCoreDbContext>(options =>
+//        options.UseNpgsql(
+//            builder.Configuration.GetConnectionString("Default"),
+//            b => b.MigrationsAssembly("ReverseProxy.WebApi")));
 
 builder.Services.AddTransient<IClusterManagement, ClusterManagement>();
 builder.Services.AddTransient<IProxyRouteManagement, ProxyRouteManagement>();
